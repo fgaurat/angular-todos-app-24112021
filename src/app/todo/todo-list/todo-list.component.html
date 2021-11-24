@@ -1,0 +1,17 @@
+
+
+
+
+
+
+<table>
+  <tr *ngFor="let todo of todos$ | async">
+    <td>{{todo.id}}</td>
+    <td>{{todo.title}}</td>
+    <td>{{todo.userId}}</td>
+    <td>{{todo.completed}}</td>
+    <td>{{todo.dueDate}}</td>
+  </tr>
+
+
+</table>
