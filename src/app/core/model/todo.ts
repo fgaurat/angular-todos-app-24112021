@@ -1,7 +1,7 @@
 export interface Todo {
-  userId:number;
-  id:number;
+  userId?:number;
+  id?:number;
   title:string;
   completed:boolean;
-  dueDate:number;
+  dueDate:number|Date;
 }

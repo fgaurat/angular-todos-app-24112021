@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable,of } from 'rxjs';
+import { Observable,of, switchMap } from 'rxjs';
 import { Todo } from 'src/app/core/model/todo';
 import { TodoService } from '../todo.service';
 
@@ -22,7 +22,11 @@ export class TodoListComponent implements OnInit {
   }
 
   onDelete(todo:Todo){
-    this.todoService.deleteTodo(todo).subscribe();
+    // this.todos$ =  this.todoService.deleteTodo(todo).pipe(
+    //   switchMap( () => this.todoService.getTodos())
+    // )
+
+    this.todoService.deleteTodo(todo).subscribe(() => this.todos$ = this.todoService.getTodos());
   }
 
 }

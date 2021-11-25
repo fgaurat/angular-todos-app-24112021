@@ -1,1 +1,37 @@
-<p>todo-form works!</p>
+<h2>Template Driven Form  </h2>
+<form #todoForm="ngForm" (ngSubmit)="submitTodo()">
+
+  <mat-form-field appearance="fill">
+    <mat-label>Input</mat-label>
+    <input matInput [(ngModel)]="todo.title" name="todoTitle" required #todoTitle = "ngModel">
+
+  </mat-form-field>
+  <div [hidden]="todoTitle.valid || todoTitle.pristine">
+    Erreur ici !
+  </div>
+<br>
+<mat-form-field appearance="fill">
+    <mat-label>Choose a date</mat-label>
+    <input matInput [matDatepicker]="picker" [(ngModel)]="todo.dueDate" name="todoDueDate">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+<br>
+
+
+<section class="example-section">
+  <mat-checkbox [(ngModel)]="todo.completed" name="todoCompleted">Completed</mat-checkbox>
+</section>
+
+<br>
+todoForm.value : {{todoForm.value | json}}
+<br>
+todoForm.valid : {{todoForm.valid | json}}
+<br>
+todoForm.invalid : {{todoForm.invalid | json}}
+<br>
+todoForm.status : {{todoForm.status | json}}
+<br>
+<button mat-flat-button color="primary" [disabled]="todoForm.invalid" >Submit</button>
+
+</form>
