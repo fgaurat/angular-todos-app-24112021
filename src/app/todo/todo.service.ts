@@ -14,4 +14,10 @@ export class TodoService {
   getTodos():Observable<Todo[]>{
     return this.http.get<Todo[]>(environment.url_todos);
   }
+
+  deleteTodo(todo:Todo):Observable<any>{
+    const urlDelete = `${environment.url_todos}/${todo.id}`
+    return this.http.delete(urlDelete);
+  }
+
 }

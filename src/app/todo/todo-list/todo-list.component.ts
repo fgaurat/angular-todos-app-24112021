@@ -12,13 +12,17 @@ export class TodoListComponent implements OnInit {
 
   todos$?:Observable<Todo[]>
 
-  displayedColumns: string[] = ['id','title','completed','dueDate'];
+  displayedColumns: string[] = ['id','title','completed','dueDate','actions'];
 
   constructor(private todoService:TodoService) { }
 
   ngOnInit(): void {
 
     this.todos$ = this.todoService.getTodos();
+  }
+
+  onDelete(todo:Todo){
+    this.todoService.deleteTodo(todo).subscribe();
   }
 
 }
