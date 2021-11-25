@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Todo } from 'src/app/core/model/todo';
+import { TodoService } from '../todo.service';
 
 @Component({
   selector: 'app-todo-form',
@@ -13,12 +14,13 @@ export class TodoFormComponent implements OnInit {
     completed:true,
     dueDate:new Date(),
   }
-  constructor() { }
+  constructor(private todoService:TodoService) { }
 
   ngOnInit(): void {
   }
 
   submitTodo(){
-    console.log(this.todo)
+    this.todoService.addTodo(this.todo).subscribe()
+
   }
 }
