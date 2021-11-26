@@ -25,7 +25,6 @@ export class TodoListComponent implements OnInit,AfterViewInit {
     const deleteTodo$ =this.messageBus.bus$.pipe(
       filter(message=> message.type=="DELETE_TODO"),
       switchMap( (action:Action) => this.todoService.deleteTodo(action.payload as Todo))
-
       )
     const loadTodos$ =this.messageBus.bus$.pipe(filter(message=> message.type=="LOAD_TODOS"))
 

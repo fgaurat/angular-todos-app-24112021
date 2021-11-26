@@ -22,7 +22,9 @@ export class TodoFormComponent implements OnInit {
   }
 
   submitTodo(){
-    this.todoService.addTodo(this.todo).subscribe( () => this.messageBus.dispatch({type:'NEW_TODO'}))
+    const ts = new Date(this.todo.dueDate).getTime()
+    const todo:Todo = {...this.todo,dueDate:ts}
+    this.todoService.addTodo(todo).subscribe( () => this.messageBus.dispatch({type:'NEW_TODO'}))
   }
 
 

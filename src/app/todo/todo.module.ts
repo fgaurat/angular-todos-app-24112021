@@ -4,7 +4,7 @@ import { TodoListComponent } from './todo-list/todo-list.component';
 import { TodoFormComponent } from './todo-form/todo-form.component';
 import { TodoReactiveFormComponent } from './todo-reactive-form/todo-reactive-form.component';
 import { MaterialModule } from '../material.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     MaterialModule
   ],
   exports:[
