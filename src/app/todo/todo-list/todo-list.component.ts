@@ -22,7 +22,11 @@ export class TodoListComponent implements OnInit,AfterViewInit {
   ngOnInit(): void {
 
     const newTodo$ =this.messageBus.bus$.pipe(filter(message=> message.type=="NEW_TODO"))
-    const deleteTodo$ =this.messageBus.bus$.pipe(filter(message=> message.type=="DELETE_TODO"))
+    const deleteTodo$ =this.messageBus.bus$.pipe(
+      filter(message=> message.type=="DELETE_TODO"),
+      switchMap( (action:Action) => this.todoService.deleteTodo(action.payload as Todo))
+
+      )
     const loadTodos$ =this.messageBus.bus$.pipe(filter(message=> message.type=="LOAD_TODOS"))
 
     this.todos$ = merge(newTodo$,deleteTodo$,loadTodos$).pipe(switchMap( () => this.todoService.getTodos()))
