@@ -18,10 +18,12 @@ export class TodoFormComponent implements OnInit {
   constructor(private todoService:TodoService,private messageBus:MessageBusService) { }
 
   ngOnInit(): void {
+
   }
 
   submitTodo(){
     this.todoService.addTodo(this.todo).subscribe( () => this.messageBus.dispatch({type:'NEW_TODO'}))
-
   }
+
+
 }
