@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable,of, switchMap } from 'rxjs';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { filter, merge, Observable,of, switchMap } from 'rxjs';
 import { Action } from 'src/app/core/action/action';
 import { Todo } from 'src/app/core/model/todo';
 import { MessageBusService } from 'src/app/core/service/message-bus.service';
@@ -10,7 +10,7 @@ import { TodoService } from '../todo.service';
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.css']
 })
-export class TodoListComponent implements OnInit {
+export class TodoListComponent implements OnInit,AfterViewInit {
 
   todos$?:Observable<Todo[]>
 
@@ -18,20 +18,30 @@ export class TodoListComponent implements OnInit {
 
   constructor(private todoService:TodoService, private messageBus:MessageBusService) { }
 
+
   ngOnInit(): void {
 
-    this.todos$ = this.todoService.getTodos();
+    const newTodo$ =this.messageBus.bus$.pipe(filter(message=> message.type=="NEW_TODO"))
+    const deleteTodo$ =this.messageBus.bus$.pipe(filter(message=> message.type=="DELETE_TODO"))
+    const loadTodos$ =this.messageBus.bus$.pipe(filter(message=> message.type=="LOAD_TODOS"))
 
-    this.messageBus.bus$.subscribe( (message:Action) => {
+    this.todos$ = merge(newTodo$,deleteTodo$,loadTodos$).pipe(switchMap( () => this.todoService.getTodos()))
 
-      if( message.type=="NEW_TODO"){
-        this.todos$ = this.todoService.getTodos();
-      }
-      else if(message.type=="DELETE_TODO"){
 
-      }
+    // this.messageBus.bus$.subscribe( (message:Action) => {
 
-    })
+    //   if( message.type=="NEW_TODO"){
+    //     this.todos$ = this.todoService.getTodos();
+    //   }
+    //   else if(message.type=="DELETE_TODO"){
+
+    //   }
+
+    // })
+
+  }
+  ngAfterViewInit(): void {
+    this.messageBus.dispatch({type:"LOAD_TODOS"})
 
   }
 
